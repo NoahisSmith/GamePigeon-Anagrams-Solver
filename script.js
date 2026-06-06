@@ -75,6 +75,9 @@ function findWords(letters) {
 }
 
 function displayResults(words) {
+	
+	document.getElementById("wordCount").textContent = words.length;
+	
     const resultsDiv = document.getElementById("results");
 
     if (words.length === 0) {

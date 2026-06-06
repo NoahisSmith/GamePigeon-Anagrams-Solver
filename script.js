@@ -1,5 +1,21 @@
 let dictionary = [];
 
+const lettersInput = document.getElementById("letters");
+const tiles = document.querySelectorAll(".tile");
+
+function updateTiles() {
+    const letters = lettersInput.value
+        .toUpperCase()
+        .replace(/[^A-Z]/g, "")
+        .slice(0, 6);
+
+    tiles.forEach((tile, index) => {
+        tile.textContent = letters[index] || "";
+    });
+}
+
+lettersInput.addEventListener("input", updateTiles);
+
 async function loadDictionary() {
     try {
         const response = await fetch("dictionary.txt");

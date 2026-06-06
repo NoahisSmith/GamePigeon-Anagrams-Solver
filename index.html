@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anagram Solver</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="game-container">
+
+    <div class="top-section">
+        <input
+            type="text"
+            id="letters"
+            maxlength="6"
+            placeholder="Enter Letters">
+
+        <button id="solveBtn">Solve</button>
+    </div>
+
+    <div class="board-section">
+
+        <div class="side-panel">
+            <div class="timer-card">
+                <div class="icon">⏱</div>
+                <div class="time">Ready</div>
+            </div>
+        </div>
+
+        <div class="game-board">
+
+            <div class="answer-row">
+                <div class="answer-slot"></div>
+                <div class="answer-slot"></div>
+                <div class="answer-slot"></div>
+                <div class="answer-slot"></div>
+                <div class="answer-slot"></div>
+                <div class="answer-slot"></div>
+            </div>
+
+            <div class="tile-row">
+                <div class="tile"></div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+            </div>
+
+        </div>
+
+        <div class="side-panel">
+            <div class="score-card">
+                <div class="score-title">Words Found</div>
+                <div id="wordCount" class="score-number">0</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="results"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

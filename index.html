@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anagram Solver</title>
 
-	<link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="favicon.png">
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -18,17 +18,24 @@
             type="text"
             id="letters"
             maxlength="6"
-            placeholder="Enter Letters">
+            placeholder="Enter Letters"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Enter up to 6 letters to solve">
 
-        <button id="solveBtn">Solve</button>
+        <button id="solveBtn" disabled aria-label="Solve anagram">Solve</button>
     </div>
+
+    <!-- Inline error message replaces alert() -->
+    <div id="inputError" class="input-error" aria-live="assertive"></div>
 
     <div class="board-section">
 
         <div class="side-panel">
             <div class="timer-card">
                 <div class="icon">⏱</div>
-                <div class="time">Ready</div>
+                <!-- id added: shows Loading… → Ready → solve time in ms -->
+                <div id="timerDisplay" class="time">Loading…</div>
             </div>
         </div>
 
@@ -63,7 +70,8 @@
 
     </div>
 
-    <div id="results"></div>
+    <!-- hidden attribute: results panel is invisible until first solve -->
+    <div id="results" hidden aria-live="polite"></div>
 
 </div>
 

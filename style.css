@@ -31,8 +31,12 @@ body {
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin-bottom: 80px;
+
+    /* Reduced from 80px — the input-error row below accounts for the rest */
+    margin-bottom: 16px;
 }
+
+/* ── Input ─────────────────────────────────────────────────────────────────── */
 
 #letters {
     width: 350px;
@@ -53,7 +57,47 @@ body {
 
     box-shadow:
         0 10px 25px rgba(0,0,0,.15);
+
+    /* FIX: smooth focus transition */
+    transition: outline 0.1s ease, box-shadow 0.15s ease;
+
+    /* Prevent browser outline from clashing with custom one */
+    outline: 3px solid transparent;
+    outline-offset: 2px;
 }
+
+/* FIX: visible focus ring for keyboard accessibility */
+#letters:focus {
+    outline: 3px solid rgba(255,255,255,.75);
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.15),
+        0 0 0 1px rgba(63,47,92,.2);
+}
+
+/* FIX: styled placeholder so it's legible against the frosted background */
+#letters::placeholder {
+    color: rgba(63,47,92,.45);
+    font-weight: normal;
+}
+
+/* ── Inline error message ───────────────────────────────────────────────────── */
+
+/* Sits between the input row and the board; occupies space so the layout
+   stays stable whether or not there is an error showing. */
+.input-error {
+    min-height: 24px;
+    margin-bottom: 40px;
+
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #fff;
+
+    text-shadow: 0 1px 3px rgba(0,0,0,.35);
+}
+
+/* ── Solve button ───────────────────────────────────────────────────────────── */
 
 #solveBtn {
     width: 140px;
@@ -69,7 +113,39 @@ body {
 
     box-shadow:
         0 8px 20px rgba(0,0,0,.15);
+
+    /* FIX: smooth interaction feedback */
+    transition: transform 0.1s ease, box-shadow 0.12s ease, background 0.15s ease, opacity 0.2s ease;
+
+    outline: 3px solid transparent;
+    outline-offset: 2px;
 }
+
+/* FIX: hover state */
+#solveBtn:hover:not(:disabled) {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0,0,0,.2);
+}
+
+/* FIX: active / press state */
+#solveBtn:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+}
+
+/* FIX: keyboard focus ring */
+#solveBtn:focus-visible {
+    outline: 3px solid rgba(63,47,92,.55);
+}
+
+/* FIX: disabled state while dictionary is loading */
+#solveBtn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* ── Board layout ───────────────────────────────────────────────────────────── */
 
 .board-section {
     display: flex;
@@ -174,6 +250,10 @@ body {
     opacity: 0.25;
 }
 
+/* ── Results panel ──────────────────────────────────────────────────────────── */
+
+/* FIX: #results starts with the HTML `hidden` attribute so no styles apply
+   until JS removes it after the first solve — the empty white box is gone. */
 #results {
     margin-top: 60px;
 
@@ -183,11 +263,28 @@ body {
 
     padding: 25px;
 
+    /* Scroll fade: position:relative lets the ::after overlay sit correctly */
+    position: relative;
+
     max-height: 400px;
     overflow-y: auto;
 
     box-shadow:
         0 10px 25px rgba(0,0,0,.15);
+}
+
+/* FIX: subtle bottom fade indicates the list is scrollable */
+#results::after {
+    content: "";
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    display: block;
+    height: 36px;
+    margin-top: -36px;
+    border-radius: 0 0 15px 15px;
+    background: linear-gradient(transparent, rgba(255,255,255,.85));
+    pointer-events: none;
 }
 
 .word-group {
@@ -197,6 +294,12 @@ body {
 .word-group h3 {
     color: #4f4174;
     margin-bottom: 10px;
+}
+
+/* FIX: de-emphasised count inside each group heading */
+.group-count {
+    font-weight: normal;
+    color: #9585b5;
 }
 
 .word {
@@ -214,6 +317,16 @@ body {
 
     font-weight: bold;
 }
+
+/* FIX: style for the "No words found" paragraph */
+.no-results {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 8px 0;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
 
 @media (max-width: 1000px) {
 
